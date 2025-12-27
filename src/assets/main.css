@@ -3,6 +3,22 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* custom variants color based stich themes */
+@theme {
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-background-light: #f1f5f9;
+  --color-background-dark: #0f172a;
+  --color-surface-light: #ffffff;
+  --color-surface-dark: #1e293b;
+  --color-border-light: #e2e8f0;
+  --color-border-dark: #334155;
+  --color-text-main-light: #0f172a;
+  --color-text-main-dark: #f8fafc;
+  --color-text-muted-light: #64748b;
+  --color-text-muted-dark: #94a3b8;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -114,6 +130,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  .container {
+    @apply mx-auto px-4 max-w-lg sm:max-w-xl md:max-w-2xl xl:max-w-6xl 2xl:max-w-7xl;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
