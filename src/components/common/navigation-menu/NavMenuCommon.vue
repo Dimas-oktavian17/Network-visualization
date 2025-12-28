@@ -17,38 +17,41 @@ const { openDropdown, toggleDropdown, isActiveDropdown, navRoutes, mobileOpen } 
 </script>
 
 <template>
-  <nav
-    class="container fixed w-full z-999 top-0 left-0 bg-white/10 backdrop-blur-2xl lg:bg-white/10 lg:backdrop-blur-2xl lg:border border-white lg:rounded-full">
-    <div class="mx-auto px-4 py-3 flex items-center justify-between">
+  <nav class="z-20 fixed w-full  top-0 start-0  bg-white/10 backdrop-blur-2xl lg:bg-white/10 lg:backdrop-blur-2xl">
+    <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
       <div class="flex items-center space-x-3">
-        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <RouterLink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Logo" />
           <span class="text-xl text-heading font-semibold">Oktanetflow</span>
-        </a>
+        </RouterLink>
       </div>
 
       <!-- Desktop menu -->
       <div class="hidden md:flex md:items-center md:space-x-6 w-full max-w-2xl justify-end">
         <NavigationMenu class="w-full rounded-lg  flex items-center justify-center" :viewport="false">
           <NavigationMenuList class="bg-transparent flex items-center space-x-4">
-            <NavigationMenuItem>
-              <RouterLink to="/" class="bg-transparent" :class="navigationMenuTriggerStyle()">Home</RouterLink>
-            </NavigationMenuItem>
+            <template v-for="item in navRoutes" :key="item.name">
+              <NavigationMenuItem v-if="item.routes && item.routes.length === 1">
+                <RouterLink :to="item.routes?.[0]?.path" class="bg-transparent" :class="navigationMenuTriggerStyle()">
+                  {{ item.routes?.[0]?.name }}
+                </RouterLink>
+              </NavigationMenuItem>
 
-            <NavigationMenuItem>
-              <NavigationMenuTrigger class="bg-transparent">Docs</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul class="grid gap-4 p-2">
-                  <li>
-                    <NavigationMenuLink as-child>
-                      <a href="#">
-                        <div class="font-medium">Components</div>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+              <NavigationMenuItem v-else>
+                <NavigationMenuTrigger class="bg-transparent capitalize">{{ item.name }}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul class="grid gap-4 p-2">
+                    <li v-for="routeItem in item.routes" :key="routeItem.name">
+                      <NavigationMenuLink as-child>
+                        <RouterLink :to="routeItem.path" class="">
+                          <h3 class="text-xs font-medium leading-none capitalize">{{ routeItem.name }}</h3>
+                        </RouterLink>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </template>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
@@ -72,7 +75,7 @@ const { openDropdown, toggleDropdown, isActiveDropdown, navRoutes, mobileOpen } 
 
     <!-- Mobile menu panel -->
     <!-- <transition name="fade"> -->
-    <div v-if="mobileOpen" id="navbar-dropdown">
+    <div v-if="mobileOpen" class="md:hidden" id="navbar-dropdown">
       <ul
         class="space-y-2 flex flex-col font-medium p-4 md:p-0 mt-4 rounded-base bg-neutral-secondary-soft md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-neutral-primary">
         <template v-for="(item, index) in navRoutes" :key="index">
