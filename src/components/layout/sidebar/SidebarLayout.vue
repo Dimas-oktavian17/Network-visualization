@@ -19,38 +19,42 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+const route = useRoute();
+
+// --- Computed ---
+const currentPath = computed(() => route.fullPath.split('/')[2]);
+const currentPage = computed(() => route.name as string);
 </script>
 
 <template>
-  <SidebarProvider>
+  <SidebarProvider class="mt-16 bg-sidebar">
     <AppSidebar />
-    <SidebarInset>
-      <header class="flex h-16 shrink-0 items-center gap-2 border-b">
+    <SidebarInset class="bg-sidebar">
+      <header class="bg-sidebar flex h-16 shrink-0 items-center gap-2 border-b">
         <div class="flex items-center gap-2 px-3">
           <SidebarTrigger />
           <Separator orientation="vertical" class="mr-2 h-4" />
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem class="hidden md:block">
-                <BreadcrumbLink href="#">
-                  Building Your Application
+                <BreadcrumbLink class="capitalize">
+                  {{ currentPath }}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator class="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                <BreadcrumbPage class="capitalize">
+                  {{ currentPage }}
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </div>
       </header>
       <div class="flex flex-1 flex-col gap-4 p-4">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-        </div>
-        <div class="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
+        <slot />
       </div>
     </SidebarInset>
   </SidebarProvider>

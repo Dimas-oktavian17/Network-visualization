@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { SidebarProps } from '@/components/ui/sidebar'
+import type { SidebarProps } from '@/components/ui/sidebar';
 
-import { GalleryVerticalEnd } from "lucide-vue-next"
+import { GalleryVerticalEnd } from "lucide-vue-next";
 import {
   Sidebar,
   SidebarContent,
@@ -14,165 +14,64 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
-} from '@/components/ui/sidebar'
+} from '@/components/ui/sidebar';
+import { RouterLink } from 'vue-router';
 
-const props = defineProps<SidebarProps>()
+const props = defineProps<SidebarProps>();
 
 // This is sample data.
 const data = {
   navMain: [
     {
       title: "Getting Started",
-      url: "#",
+      url: "/guide/introduction",
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "Introduction",
+          url: "/guide/introduction",
         },
         {
-          title: "Project Structure",
-          url: "#",
+          title: "Quickstart",
+          url: "/guide/quickstart",
         },
       ],
     },
     {
-      title: "Building Your Application",
+      title: "VLSM Guide",
       url: "#",
       items: [
         {
-          title: "Routing",
-          url: "#",
+          title: "Introduction",
+          url: "/guide/vlsm/introduction",
         },
         {
-          title: "Data Fetching",
-          url: "#",
-          isActive: true,
+          title: "Quickstart",
+          url: "/guide/vlsm/quickstart",
         },
         {
-          title: "Rendering",
-          url: "#",
-        },
-        {
-          title: "Caching",
-          url: "#",
-        },
-        {
-          title: "Styling",
-          url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "API Reference",
-      url: "#",
-      items: [
-        {
-          title: "Components",
-          url: "#",
-        },
-        {
-          title: "File Conventions",
-          url: "#",
-        },
-        {
-          title: "Functions",
-          url: "#",
-        },
-        {
-          title: "next.config.js Options",
-          url: "#",
-        },
-        {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Architecture",
-      url: "#",
-      items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Community",
-      url: "#",
-      items: [
-        {
-          title: "Contribution Guide",
-          url: "#",
+          title: "Visualization",
+          url: "/guide/vlsm/visualization",
         },
       ],
     },
   ],
-}
+};
 </script>
 
 <template>
-  <Sidebar v-bind="props">
+  <Sidebar class="mt-16" v-bind="props">
     <SidebarHeader>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" as-child>
             <a href="#">
-              <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+              <div
+                class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <GalleryVerticalEnd class="size-4" />
               </div>
               <div class="flex flex-col gap-0.5 leading-none">
-                <span class="font-medium">Documentation</span>
-                <span class="">v1.0.0</span>
+                <span class="font-medium">Oktanetflow</span>
+                <span class="">v1.0</span>
               </div>
             </a>
           </SidebarMenuButton>
@@ -184,14 +83,14 @@ const data = {
         <SidebarMenu>
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title">
             <SidebarMenuButton as-child>
-              <a :href="item.url" class="font-medium">
+              <RouterLink :to="item.url" class="font-medium">
                 {{ item.title }}
-              </a>
+              </RouterLink>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length">
               <SidebarMenuSubItem v-for="childItem in item.items" :key="childItem.title">
-                <SidebarMenuSubButton as-child :is-active="childItem.isActive">
-                  <a :href="childItem.url">{{ childItem.title }}</a>
+                <SidebarMenuSubButton as-child :is-active="childItem.url === $route.path">
+                  <RouterLink :to="childItem.url">{{ childItem.title }}</RouterLink>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             </SidebarMenuSub>
