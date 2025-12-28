@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
-
+@plugin "@tailwindcss/typography";
 @custom-variant dark (&:is(.dark *));
 
 /* custom variants color based stich themes */
 @theme {
+  --font-atkinson: "Atkinson Hyperlegible", sans-serif;
   --color-primary-light: #3b82f6;
   --color-primary-dark: #2563eb;
   --color-background-light: #f1f5f9;
@@ -132,10 +134,15 @@
   }
 
   .container {
-    @apply mx-auto px-4 max-w-lg sm:max-w-xl md:max-w-2xl xl:max-w-6xl 2xl:max-w-7xl;
+    @apply mx-auto px-4 lg:max-w-7xl;
   }
 
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* src/assets/main.css */
+.toc-link.toc-active {
+  @apply text-blue-400 font-medium bg-blue-400/10 border-l-2 border-blue-400;
 }
