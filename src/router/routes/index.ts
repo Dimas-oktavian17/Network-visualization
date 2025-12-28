@@ -1,4 +1,12 @@
-import { homeRoutes } from './home';
 import { aboutRoutes } from './about';
 import { guideRoutes } from './guide';
-export const routes = [...homeRoutes, ...aboutRoutes, ...guideRoutes];
+import { homeRoutes } from './home';
+import { guideVlsmRoutes } from './vlsm';
+
+export const routes = [
+  ...homeRoutes,
+  ...aboutRoutes,
+  ...guideRoutes,  // Should come before catch-all
+  ...guideVlsmRoutes,
+  // { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound } // at the end
+];
