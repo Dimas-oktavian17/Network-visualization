@@ -14,13 +14,10 @@
           CIDR Prefix
           <CardAction class="text-white">/{{ cidrPrefix[0] }}</CardAction>
         </header>
-        <Slider v-model="cidrPrefix" :default-value="[24]" :min="0" :max="30" :step="1">
+        <Slider v-model="cidrPrefix" :default-value="[24]" :min="8" :max="30" :step="1">
         </Slider>
         <div class="flex gap-4 w-full justify-between items-center">
-          <span class="text-sm font-medium">/8</span>
-          <span class="text-sm font-medium">/16</span>
-          <span class="text-sm font-medium">/24</span>
-          <span class="text-sm font-medium">/30</span>
+          <span class="text-sm font-medium" v-for="(item, index) in CIDRList" :key="index">/{{ item }}</span>
         </div>
       </CardFooter>
     </template>
@@ -34,14 +31,10 @@ import CardFooter from '@/components/ui/card/CardFooter.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Slider from '@/components/ui/slider/Slider.vue';
 import { CircleCheck } from 'lucide-vue-next';
-import { computed, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useVisualizationStore } from '@/features/vlsm/store/VisualizationStore';
 
-const octets = ref<string>("192.168.1.0");
-const cidrPrefix = ref<number[]>([24]);
-// octetsChunking
-const octetsConfig = computed(() => {
-  return octets.value.split('.').map((octet) => parseInt(octet));
-});
+const { CIDRList, octets, cidrPrefix } = storeToRefs(useVisualizationStore());
 </script>
 
 <style></style>
