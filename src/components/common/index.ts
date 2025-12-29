@@ -4,3 +4,4 @@ export { default as BadgeCommon } from './badge/BadgeCommon.vue';
 export { default as TableOfContents } from './toc/TableOfContents.vue';
 export { default as ItemCommon } from './item/ItemCommon.vue';
 export { default as CardCommon } from './card/CardCommon.vue';
+export { default as AlertCommon } from './alert/AlertCommon.vue';
