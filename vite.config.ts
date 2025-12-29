@@ -31,7 +31,7 @@ export default defineConfig({
           }
         }));
       },
-      wrapperClasses: 'markdown-body prose dark:prose-invert mx-12',
+      wrapperClasses: 'w-full min-w-0 markdown-body break-words prose dark:prose-invert md:mx-12',
     }),
     vueDevTools(),
     tailwindcss(),
