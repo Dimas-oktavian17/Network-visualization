@@ -8,9 +8,9 @@ import TableOfContents from '@/components/common/toc/TableOfContents.vue';
 <template>
   <NavMenuCommon />
   <SidebarLayout>
-    <div class="grid auto-rows-min gap-4  md:grid-cols-2 relative">
+    <div class="grid gap-4  md:grid-cols-2 w-full min-w-0">
       <IntroContent />
-      <TableOfContents />
+      <TableOfContents class="hidden md:block" />
     </div>
   </SidebarLayout>
 </template>
