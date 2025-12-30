@@ -5,6 +5,11 @@ import HeaderVisualizer from '../components/header/HeaderVisualizer.vue';
 import HeaderToggle from '../components/header/HeaderToggle.vue';
 import CardNetConfig from '../components/card/CardNetConfig.vue';
 import IntroContent from '@/features/guide/components/IntroContent.vue';
+import AlertCommon from '@/components/common/alert/AlertCommon.vue';
+import { CircleAlert, } from 'lucide-vue-next';
+import { useVisualizationStore } from '../store/VisualizationStore';
+import { storeToRefs } from 'pinia';
+const { cidrPrefixSetter, unsupportedClassAlert } = storeToRefs(useVisualizationStore());
 </script>
 
 <template>
@@ -17,6 +22,19 @@ import IntroContent from '@/features/guide/components/IntroContent.vue';
           <HeaderVisualizer>
             <HeaderToggle></HeaderToggle>
           </HeaderVisualizer>
+          <!-- Alert -->
+          <Transition>
+            <AlertCommon v-if="unsupportedClassAlert" class="transition-all max-w-full w-full duration-1000"
+              title="The current version of VLSM only supports Class C."
+              description="We are working on adding support for Class A and Class B.">
+              <template #icon>
+                <CircleAlert class="size-5 text-destructive" />
+              </template>
+            </AlertCommon>
+          </Transition>
+          <pre>
+  {{ cidrPrefixSetter }}
+</pre>
           <!-- /Visualization content -->
           <CardNetConfig></CardNetConfig>
         </div>
