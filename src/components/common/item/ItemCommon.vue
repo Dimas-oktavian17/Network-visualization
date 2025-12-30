@@ -5,8 +5,8 @@ import {
 </script>
 
 <template>
-  <div class="flex w-full  flex-col gap-6">
-    <Item variant="muted">
+  <div class="flex w-full flex-col gap-6">
+    <Item>
       <slot />
     </Item>
   </div>
