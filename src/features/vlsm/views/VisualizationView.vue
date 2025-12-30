@@ -6,18 +6,20 @@ import HeaderToggle from '../components/header/HeaderToggle.vue';
 import CardNetConfig from '../components/card/CardNetConfig.vue';
 import IntroContent from '@/features/guide/components/IntroContent.vue';
 import AlertCommon from '@/components/common/alert/AlertCommon.vue';
-import { CircleAlert, } from 'lucide-vue-next';
+import { CircleAlert } from 'lucide-vue-next';
 import { useVisualizationStore } from '../store/VisualizationStore';
 import { storeToRefs } from 'pinia';
 import FormsCalculate from '../components/forms/FormsCalculate.vue';
-const { cidrPrefixSetter, unsupportedClassAlert } = storeToRefs(useVisualizationStore());
+import ItemSubnets from '../components/item/ItemSubnets.vue';
+const visualStore = useVisualizationStore();
+const { SubnetsData, unsupportedClassAlert } = storeToRefs(visualStore);
 </script>
 
 <template>
   <div>
     <NavMenuCommon />
     <SidebarLayout>
-      <div class="grid gap-4  md:grid-cols-2 w-full min-w-0">
+      <div class="grid gap-4 md:grid-cols-2 w-full min-w-0">
         <div class="w-full max-w-full space-y-4">
           <!-- Visualization header -->
           <HeaderVisualizer>
@@ -33,11 +35,12 @@ const { cidrPrefixSetter, unsupportedClassAlert } = storeToRefs(useVisualization
               </template>
             </AlertCommon>
           </Transition>
-          <!-- <pre>
-  {{ cidrPrefixSetter }}
-</pre> -->
           <!-- /Visualization content -->
           <CardNetConfig></CardNetConfig>
+          <Transition v-for="(item, index) in SubnetsData" :key="index">
+            <ItemSubnets @remove="visualStore.removeSubnet(item.id)" :title="item.room"
+              :description="`Need ${item.hosts} hosts`" :avatar="item.room" />
+          </Transition>
           <FormsCalculate />
         </div>
         <IntroContent />
