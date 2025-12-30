@@ -9,6 +9,7 @@ import AlertCommon from '@/components/common/alert/AlertCommon.vue';
 import { CircleAlert, } from 'lucide-vue-next';
 import { useVisualizationStore } from '../store/VisualizationStore';
 import { storeToRefs } from 'pinia';
+import FormsCalculate from '../components/forms/FormsCalculate.vue';
 const { cidrPrefixSetter, unsupportedClassAlert } = storeToRefs(useVisualizationStore());
 </script>
 
@@ -32,11 +33,12 @@ const { cidrPrefixSetter, unsupportedClassAlert } = storeToRefs(useVisualization
               </template>
             </AlertCommon>
           </Transition>
-          <pre>
+          <!-- <pre>
   {{ cidrPrefixSetter }}
-</pre>
+</pre> -->
           <!-- /Visualization content -->
           <CardNetConfig></CardNetConfig>
+          <FormsCalculate />
         </div>
         <IntroContent />
       </div>
