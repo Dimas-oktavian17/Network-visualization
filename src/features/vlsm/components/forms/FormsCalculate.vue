@@ -22,7 +22,7 @@ const { SubnetsData } = storeToRefs(useVisualizationStore());
 const formSchema = toTypedSchema(
   z.object({
     room: z.string().min(5, { message: 'Room must be at least 5 characters.' }),
-    hosts: z.number().min(1, { message: 'There must be at least 1 host.' }),
+    hosts: z.number().min(1, { message: 'There must be at least 1 host.' }).max(254, { message: 'Maximum hosts per subnet is 254.' }),
   }),
 );
 
