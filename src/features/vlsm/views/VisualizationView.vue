@@ -11,8 +11,9 @@ import { useVisualizationStore } from '../store/VisualizationStore';
 import { storeToRefs } from 'pinia';
 import FormsCalculate from '../components/forms/FormsCalculate.vue';
 import ItemSubnets from '../components/item/ItemSubnets.vue';
+import { onMounted } from 'vue';
 const visualStore = useVisualizationStore();
-const { SubnetsData, unsupportedClassAlert } = storeToRefs(visualStore);
+const { SubnetsDataComputed, unsupportedClassAlert } = storeToRefs(visualStore);
 </script>
 
 <template>
@@ -37,10 +38,12 @@ const { SubnetsData, unsupportedClassAlert } = storeToRefs(visualStore);
           </Transition>
           <!-- /Visualization content -->
           <CardNetConfig></CardNetConfig>
-          <Transition v-for="(item, index) in SubnetsData" :key="index">
-            <ItemSubnets @remove="visualStore.removeSubnet(item.id)" :title="item.room"
-              :description="`Need ${item.hosts} hosts`" :avatar="item.room" />
-          </Transition>
+          <TransitionGroup>
+            <Transition v-for="(item, index) in SubnetsDataComputed" :key="index" name="fade">
+              <ItemSubnets @remove="visualStore.removeSubnet(item.id)" :title="item.room"
+                :description="`Need ${item.hosts} hosts`" :avatar="item.room" />
+            </Transition>
+          </TransitionGroup>
           <FormsCalculate />
         </div>
         <IntroContent />

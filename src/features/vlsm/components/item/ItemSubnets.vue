@@ -22,7 +22,7 @@ defineEmits(['remove']);
 
 <template>
   <div class="flex w-full max-w-full flex-col gap-6">
-    <ItemCommon variant="outline">
+    <ItemCommon>
       <ItemMedia>
         <Avatar class="size-10">
           <AvatarImage

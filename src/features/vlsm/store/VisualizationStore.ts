@@ -58,6 +58,8 @@ export const useVisualizationStore = defineStore('visualization', () => {
         : subnetId;
     return (subnetMaskId.value = newSubnetId?.join('.'));
   };
+  // Calculations
+  const SubnetsDataComputed = computed(() => SubnetsData.value.sort((a, b) => b.hosts - a.hosts));
   const wildcardMask = computed(() => {
     if (!subnetMaskId.value) return '';
     if (cidrPrefix.value[0] === 24) return '0.0.0.255';
@@ -113,6 +115,7 @@ export const useVisualizationStore = defineStore('visualization', () => {
     totalIps,
     totalUsableIps,
     usableHostsRange,
+    SubnetsDataComputed,
     removeSubnet
   };
 });
