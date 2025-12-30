@@ -16,8 +16,8 @@ function NavMenuComposable() {
     {
       name: 'docs',
       routes: [
-        { name: 'guide', path: '/guide' },
-        { name: 'quickstart', path: '/quickstart' },
+        { name: 'introduction', path: '/guide/introduction' },
+        { name: 'quickstart', path: '/guide/quickstart' },
         { name: 'tutorial', path: '/tutorial' },
         { name: 'examples', path: '/examples' },
         { name: 'glossary', path: '/glossary' },
