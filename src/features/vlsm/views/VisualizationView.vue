@@ -12,10 +12,14 @@ import { storeToRefs } from 'pinia';
 import FormsCalculate from '../components/forms/FormsCalculate.vue';
 import ItemSubnets from '../components/item/ItemSubnets.vue';
 import { useSubnetsStore } from '../store/SubentsStore';
+import CardAllocation from '../components/card/CardAllocation.vue';
+import CardAllocationChart from '../components/card/CardAllocationChart.vue';
+import Card from '@/components/ui/card/Card.vue';
 const visualStore = useVisualizationStore();
 const subnetStore = useSubnetsStore();
-const { SubnetsDataComputed, unsupportedClassAlert, SubnetsData } = storeToRefs(visualStore);
-const { optimalSubnets } = storeToRefs(subnetStore);
+const { totalIps, SubnetsDataComputed, unsupportedClassAlert, SubnetsData } =
+  storeToRefs(visualStore);
+const { optimalSubnets, totalAvaibleIps } = storeToRefs(subnetStore);
 // Subnets calculation on mount
 const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
 </script>
@@ -49,7 +53,24 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
             </Transition>
           </TransitionGroup>
           <FormsCalculate @calculate="calculateSubnets" />
-          {{ optimalSubnets }}
+          <Card class="w-full max-w-full border-0">
+            <CardHeader>
+              <Item class="flex justify-between items-center">
+                <ItemContent>
+                  <ItemTitle>Allocation Summary</ItemTitle>
+                </ItemContent>
+                <ItemActions>
+                  <BadgeCommon variant="secondary" class="rounded-sm">
+                    {{ optimalSubnets }}
+                  </BadgeCommon>
+                </ItemActions>
+              </Item>
+            </CardHeader>
+            <div class="grid lg:grid-cols-2 gap-4">
+              <CardAllocationChart :-chart-datas="totalAvaibleIps.chartDatas" :percent="totalAvaibleIps.percent" />
+              <CardAllocation :footer-description="totalAvaibleIps.avaible" :header-description="totalIps" />
+            </div>
+          </Card>
         </div>
         <IntroContent />
       </div>
