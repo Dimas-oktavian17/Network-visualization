@@ -34,7 +34,7 @@ export const useVisualizationStore = defineStore('visualization', () => {
   const SubnetsData = ref<SubnetsDatas>([]);
   // Method
   const removeSubnet = (index: number) => {
-    SubnetsData.value = SubnetsData.value.filter((item) => item.id !== index);
+    return SubnetsData.value = SubnetsData.value.filter((item) => item.id !== index);
   };
 
   const SubnettingMethod = (cidr: number) => {
