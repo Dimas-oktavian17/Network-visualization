@@ -1,12 +1,14 @@
 <template>
   <CardCommon class="bg-muted w-full max-w-full">
     <template #content>
-      <div class="relative">
-        <Input v-model="octets" disabled type="string" placeholder="127.0.0.1" class="pr-10" />
-        <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none">
-          <CircleCheck class="size-5 text-green-500 mr-2" />
+      <CardContent class="px-6">
+        <div class="relative">
+          <Input v-model="octets" disabled type="string" placeholder="127.0.0.1" class="pr-10" />
+          <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none">
+            <CircleCheck class="size-5 text-green-500 mr-2" />
+          </div>
         </div>
-      </div>
+      </CardContent>
     </template>
     <template #footer>
       <CardFooter class="flex items-start flex-col gap-2 space-y-4">

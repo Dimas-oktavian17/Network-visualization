@@ -30,9 +30,7 @@ withDefaults(
         <slot name="header-action" />
       </CardAction>
     </CardHeader>
-    <CardContent>
-      <slot name="content" />
-    </CardContent>
+    <slot name="content" />
     <slot name="footer" />
   </Card>
 </template>
