@@ -37,9 +37,10 @@ export const useSubnetsStore = defineStore('subnets', () => {
   // ! Logic: VLSM algorithm core
   const SubnetsCalculated = (subnets: SubnetsData) => {
     const RESERVED_IPS = 2; // Network + Broadcast
-
-    if (subnetsValidation(subnets, RESERVED_IPS) > visualizationStore.totalIps) {
+    subnetsValidation(subnets, RESERVED_IPS);
+    if (optimalVLSM.value.total > visualizationStore.totalIps) {
       console.log('not enough main prefix not enough allocated');
+      optimalVLSM.value.total = 0;
       return;
     }
 
@@ -97,10 +98,24 @@ export const useSubnetsStore = defineStore('subnets', () => {
     if (efficient >= 50) return '⭐⭐⭐⭐ Good (50-75%)';
     if (efficient >= 25) return '⭐⭐⭐ Fair (25-50%)';
     if (efficient >= 10) return '⭐⭐ Poor (10-25%)';
-    return '⭐ Very Wasteful (<10%)';
+    return '';
+  });
+  // ! UI: allocated Ips
+  const totalAvaibleIps = computed(() => {
+    const efficient = (optimalVLSM.value.total / visualizationStore.totalIps) * 100;
+    const avaible = visualizationStore.totalIps - optimalVLSM.value.total;
+    return {
+      avaible: avaible,
+      percent: Math.round(efficient), // efficient,
+      chartDatas: [
+        { status: "used", count: optimalVLSM.value.total, fill: "var(--color-used)" },
+        { status: "available", count: avaible, fill: "var(--color-available)" },
+      ]
+    };
   });
   return {
     SubnetsCalculated,
     optimalSubnets,
+    totalAvaibleIps
   };
 });
