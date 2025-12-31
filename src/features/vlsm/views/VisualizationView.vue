@@ -11,9 +11,13 @@ import { useVisualizationStore } from '../store/VisualizationStore';
 import { storeToRefs } from 'pinia';
 import FormsCalculate from '../components/forms/FormsCalculate.vue';
 import ItemSubnets from '../components/item/ItemSubnets.vue';
-import { onMounted } from 'vue';
+import { useSubnetsStore } from '../store/SubentsStore';
 const visualStore = useVisualizationStore();
-const { SubnetsDataComputed, unsupportedClassAlert } = storeToRefs(visualStore);
+const subnetStore = useSubnetsStore();
+const { SubnetsDataComputed, unsupportedClassAlert, SubnetsData } = storeToRefs(visualStore);
+const { optimalSubnets } = storeToRefs(subnetStore);
+// Subnets calculation on mount
+const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
 </script>
 
 <template>
@@ -44,7 +48,8 @@ const { SubnetsDataComputed, unsupportedClassAlert } = storeToRefs(visualStore);
                 :description="`Need ${item.hosts} hosts`" :avatar="item.room" />
             </Transition>
           </TransitionGroup>
-          <FormsCalculate />
+          <FormsCalculate @calculate="calculateSubnets" />
+          {{ optimalSubnets }}
         </div>
         <IntroContent />
       </div>
