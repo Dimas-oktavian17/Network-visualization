@@ -4,3 +4,9 @@ export type CardAllocationProps = {
   footerTitle?: string;
   footerDescription?: number;
 };
+
+export type Segment = {
+  label: string;
+  value: number;
+  color: string;
+};
