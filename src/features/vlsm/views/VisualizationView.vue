@@ -15,6 +15,7 @@ import { useSubnetsStore } from '../store/SubentsStore';
 import CardAllocation from '../components/card/CardAllocation.vue';
 import CardAllocationChart from '../components/card/CardAllocationChart.vue';
 import Card from '@/components/ui/card/Card.vue';
+import CardSpaceChart from '../components/card/CardSpaceChart.vue';
 const visualStore = useVisualizationStore();
 const subnetStore = useSubnetsStore();
 const { totalIps, SubnetsDataComputed, unsupportedClassAlert, SubnetsData } =
@@ -53,6 +54,7 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
             </Transition>
           </TransitionGroup>
           <FormsCalculate @calculate="calculateSubnets" />
+          <!-- Allocation -->
           <Card class="w-full max-w-full border-0">
             <CardHeader>
               <Item class="flex justify-between items-center">
@@ -69,6 +71,19 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
             <div class="grid lg:grid-cols-2 gap-4">
               <CardAllocationChart :-chart-datas="totalAvaibleIps.chartDatas" :percent="totalAvaibleIps.percent" />
               <CardAllocation :footer-description="totalAvaibleIps.avaible" :header-description="totalIps" />
+            </div>
+          </Card>
+          <!-- address space visual -->
+          <Card class="w-full max-w-full border-0">
+            <CardHeader>
+              <Item class="flex justify-between items-center">
+                <ItemContent>
+                  <ItemTitle>Address Space Visualizer</ItemTitle>
+                </ItemContent>
+              </Item>
+            </CardHeader>
+            <div class="grid gap-4">
+              <CardSpaceChart />
             </div>
           </Card>
         </div>

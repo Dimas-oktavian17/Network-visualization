@@ -6,6 +6,7 @@ export const useVisualizationStore = defineStore('visualization', () => {
   const octets = ref<string>('192.168.1.0');
   const cidrPrefix = ref<number[]>([24]);
   const CIDRList = ref<number[]>([8, 16, 24, 30]);
+  const BitsList = ref<number[]>([0, 8, 16, 32, 64, 128, 256]);
   const classesNetworkDefault = ref({
     A: {
       defaultCidr: 8,
@@ -111,6 +112,7 @@ export const useVisualizationStore = defineStore('visualization', () => {
     totalUsableIps,
     usableHostsRange,
     SubnetsDataComputed,
-    removeSubnet
+    removeSubnet,
+    BitsList
   };
 });
