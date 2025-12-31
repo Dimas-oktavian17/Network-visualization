@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
+import type { SubnetsData as SubnetsDatas } from '@/features/vlsm/types/index';
 
 export const useVisualizationStore = defineStore('visualization', () => {
   const octets = ref<string>('192.168.1.0');
@@ -30,13 +31,7 @@ export const useVisualizationStore = defineStore('visualization', () => {
   });
   const subnetMaskId = ref<string | undefined>('');
   // FormsCalculations.vue
-  const SubnetsData = ref<
-    Array<{
-      id: number;
-      room: string;
-      hosts: number;
-    }>
-  >([]);
+  const SubnetsData = ref<SubnetsDatas>([]);
   // Method
   const removeSubnet = (index: number) => {
     SubnetsData.value = SubnetsData.value.filter((item) => item.id !== index);
