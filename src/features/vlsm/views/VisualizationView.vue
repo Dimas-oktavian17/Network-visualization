@@ -16,11 +16,13 @@ import CardAllocation from '../components/card/CardAllocation.vue';
 import CardAllocationChart from '../components/card/CardAllocationChart.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardSpaceChart from '../components/card/CardSpaceChart.vue';
+import { useSpaceVisualStore } from '../store/SpaceVisualStore';
 const visualStore = useVisualizationStore();
 const subnetStore = useSubnetsStore();
 const { totalIps, SubnetsDataComputed, unsupportedClassAlert, SubnetsData } =
   storeToRefs(visualStore);
 const { optimalSubnets, totalAvaibleIps } = storeToRefs(subnetStore);
+const { allocatedIps } = storeToRefs(useSpaceVisualStore());
 // Subnets calculation on mount
 const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
 </script>
@@ -74,7 +76,7 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
             </div>
           </Card>
           <!-- address space visual -->
-          <Card class="w-full max-w-full border-0">
+          <Card v-if="allocatedIps.length > 0" class="w-full max-w-full border-0">
             <CardHeader>
               <Item class="flex justify-between items-center">
                 <ItemContent>
@@ -83,7 +85,7 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
               </Item>
             </CardHeader>
             <div class="grid gap-4">
-              <CardSpaceChart />
+              <CardSpaceChart :data="allocatedIps" />
             </div>
           </Card>
         </div>
