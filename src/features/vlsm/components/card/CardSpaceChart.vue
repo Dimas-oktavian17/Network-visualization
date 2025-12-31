@@ -2,24 +2,18 @@
 import { storeToRefs } from 'pinia';
 import { ref, computed } from 'vue';
 import { useVisualizationStore } from '../../store/VisualizationStore';
+import type { SubnetCalculated } from '../../types';
+import type { Segment } from './types';
 
-interface Segment {
-  label: string;
-  value: number;
-  color: string;
-}
+const props = defineProps<{
+  data: SubnetCalculated[];
+}>();
 
+const data = computed(() => props.data);
 const hoveredSegment = ref<Segment | null>(null);
 const tooltipPos = ref({ x: 0, y: 0 });
 
-// Sample data - you can modify this
-const data: Segment[] = [
-  { label: 'Used', value: 450, color: '#22c55e' },
-  { label: 'Reserved', value: 200, color: '#3b82f6' },
-  { label: 'Available', value: 350, color: 'oklch(0.556 0 0)' },
-];
-
-const total = computed(() => data.reduce((sum, item) => sum + item.value, 0));
+const total = computed(() => data.value.reduce((sum, item) => sum + item.value!, 0));
 
 const handleMouseEnter = (segment: Segment, event: MouseEvent) => {
   hoveredSegment.value = segment;
@@ -54,13 +48,15 @@ const { BitsList } = storeToRefs(useVisualizationStore());
       <div class="relative h-16 mb-8 space-y-4">
         <div class="flex h-full rounded-lg overflow-hidden ">
           <div v-for="(segment, index) in data" :key="index" :style="{
-            width: getPercentage(segment.value) + '%',
+            width: getPercentage(segment.value!) + '%',
             backgroundColor: segment.color,
           }" class="relative cursor-pointer transition-all duration-200 hover:opacity-80"
-            @mouseenter="handleMouseEnter(segment, $event)" @mousemove="handleMouseMove" @mouseleave="handleMouseLeave">
-            <div v-if="getPercentage(segment.value) > 10" class="absolute inset-0 flex items-center justify-center">
+            @mouseenter="handleMouseEnter(segment as Segment, $event)" @mousemove="handleMouseMove"
+            @mouseleave="handleMouseLeave">
+            <div v-if="getPercentage(segment.value!) > 10" class="absolute inset-0 flex items-center justify-center">
               <span class="text-white font-semibold text-sm">
-                {{ segment.label }}
+
+                {{ segment.label! === 'Available' ? segment.label : segment.label!.slice(0, 4) }}
               </span>
             </div>
           </div>
