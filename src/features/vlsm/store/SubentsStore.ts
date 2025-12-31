@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { optimalVLSM, SubnetsData } from '../types';
+import type { optimalVLSM, SubnetCalculated, SubnetsData } from '../types';
 import { useVisualizationStore } from './VisualizationStore';
 import { computed, ref } from 'vue';
 
@@ -9,7 +9,7 @@ export const useSubnetsStore = defineStore('subnets', () => {
     total: 0,
     status: '',
   });
-
+  const allocatedData = ref<Array<SubnetCalculated>>();
   /**
    * Example validation: Check for duplicate IDs and valid host counts
    * @param {SubnetsData} subnets - List of subnets
@@ -76,7 +76,7 @@ export const useSubnetsStore = defineStore('subnets', () => {
           }
         }
         return {
-          ...subnet,
+          subnet,
           cidr: 32 - Math.floor(Math.log2(total)),
           totalIps: total,
           usableHosts: total - RESERVED_IPS,
@@ -85,9 +85,13 @@ export const useSubnetsStore = defineStore('subnets', () => {
           network: networkIP.join('.'),
           end: endHost.join('.'),
           broadcast: broadcastAddress.join('.'),
+          // ! UI: allocated Ips SEGMENT
+          label: subnet.room,
+          value: total,
+          color: `hsl(${Math.random() * 360}, 70%, 50%)`,
         };
       });
-
+    allocatedData.value = subnetsCopy;
     console.log('Total IPs needed:', visualizationStore.totalIps, subnetsCopy);
   };
 
@@ -116,6 +120,8 @@ export const useSubnetsStore = defineStore('subnets', () => {
   return {
     SubnetsCalculated,
     optimalSubnets,
-    totalAvaibleIps
+    totalAvaibleIps,
+    allocatedData,
+    optimalVLSM
   };
 });
