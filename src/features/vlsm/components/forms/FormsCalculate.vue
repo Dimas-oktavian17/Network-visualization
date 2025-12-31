@@ -5,7 +5,6 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormMessage,
@@ -18,6 +17,7 @@ import ItemContent from '@/components/ui/item/ItemContent.vue';
 import ItemTitle from '@/components/ui/item/ItemTitle.vue';
 import ItemActions from '@/components/ui/item/ItemActions.vue';
 import BadgeCommon from '@/components/common/badge/BadgeCommon.vue';
+import { Calculator, Plus } from 'lucide-vue-next';
 const { SubnetsData } = storeToRefs(useVisualizationStore());
 const formSchema = toTypedSchema(
   z.object({
@@ -38,10 +38,11 @@ const onSubmit = form.handleSubmit((values) => {
   });
   form.resetForm();
 });
+defineEmits(['calculate']);
 </script>
 
 <template>
-  <form class="space-y-4" @submit="onSubmit">
+  <form class="space-y-1" @submit="onSubmit">
     <Item class="flex items-center">
       <ItemContent>
         <ItemTitle>Subnets Requirements</ItemTitle>
@@ -50,27 +51,39 @@ const onSubmit = form.handleSubmit((values) => {
         <BadgeCommon variant="secondary" class="rounded-sm">{{ SubnetsData.length }} defined</BadgeCommon>
       </ItemActions>
     </Item>
-    <div class="grid grid-cols-3 gap-4">
-      <FormField v-slot="{ componentField }" name="room">
-        <FormItem>
-          <FormControl>
-            <Input type="text" placeholder="Room (LAN-A)" v-bind="componentField" />
-          </FormControl>
-          <FormDescription>This is your room name.</FormDescription>
-          <FormMessage />
-        </FormItem>
-      </FormField>
+    <div class="flex items-start gap-4">
+      <!-- Wide name/room input -->
+      <div class="flex-1">
+        <FormField v-slot="{ componentField }" name="room">
+          <FormItem class="space-y-1">
+            <FormControl>
+              <Input type="text" placeholder="Name (e.g. Guests)" v-bind="componentField" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+      </div>
 
-      <FormField v-slot="{ componentField }" name="hosts">
-        <FormItem>
-          <FormControl>
-            <Input type="number" placeholder="4" v-bind="componentField" />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
+      <!-- Small hosts input -->
+      <div class="w-32">
+        <FormField v-slot="{ componentField }" name="hosts">
+          <FormItem class="space-y-1">
+            <FormControl>
+              <Input type="number" placeholder="4" v-bind="componentField" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+      </div>
 
-      <Button type="submit">Submit</Button>
+      <!-- Plus button -->
+      <Button type="submit" variant="default">
+        <Plus class="size-5" />
+      </Button>
     </div>
   </form>
+  <Button @click="$emit('calculate')" type="button" variant="default" class="w-full mt-2">
+    <Calculator class="size-4" />
+    Calculate VLSM
+  </Button>
 </template>

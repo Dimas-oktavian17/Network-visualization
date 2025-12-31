@@ -14,7 +14,7 @@
           CIDR Prefix
           <CardAction class="text-white">/{{ cidrPrefix[0] }}</CardAction>
         </header>
-        <Slider v-model="cidrPrefix" :default-value="[24]" :min="8" :max="30" :step="1">
+        <Slider v-model="cidrPrefix" :default-value="cidrPrefix" :min="8" :max="30" :step="1">
         </Slider>
         <div class="flex gap-4 w-full justify-between items-center">
           <span class="text-sm font-medium" v-for="(item, index) in CIDRList" :key="index">/{{ item }}</span>
