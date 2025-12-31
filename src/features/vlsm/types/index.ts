@@ -1,2 +1,2 @@
 export type { SubnetsData } from './modules/VisualizationStoreTypes';
-export type { optimalVLSM } from './modules/SubentsStoreTypes';
+export type { optimalVLSM, SubnetCalculated } from './modules/SubentsStoreTypes';

@@ -1,1 +1,1 @@
-export type { CardAllocationProps } from './card/types';
+export type { CardAllocationProps, Segment } from './card/types';
