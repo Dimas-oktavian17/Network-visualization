@@ -43,6 +43,7 @@
     "vue": "^3.5.25",
     "vue-json-excel3": "^1.0.30",
     "vue-router": "^4.6.3",
+    "vue-sonner": "^2.0.9",
     "zod": "^3.25.76"
   },
   "devDependencies": {

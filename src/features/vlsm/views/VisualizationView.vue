@@ -18,6 +18,7 @@ import Card from '@/components/ui/card/Card.vue';
 import CardSpaceChart from '../components/card/CardSpaceChart.vue';
 import { useSpaceVisualStore } from '../store/SpaceVisualStore';
 import CardSubnetDetails from '../components/card/CardSubnetDetails.vue';
+import { Toaster } from 'vue-sonner';
 
 const visualStore = useVisualizationStore();
 const subnetStore = useSubnetsStore();
@@ -31,6 +32,7 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
 
 <template>
   <div>
+    <Toaster />
     <NavMenuCommon />
     <SidebarLayout>
       <div class="grid gap-4 md:grid-cols-2 w-full min-w-0">

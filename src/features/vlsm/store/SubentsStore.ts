@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import type { optimalVLSM, SubnetCalculated, SubnetsData } from '../types';
 import { useVisualizationStore } from './VisualizationStore';
 import { computed, ref } from 'vue';
+import { toast } from 'vue-sonner';
 
 export const useSubnetsStore = defineStore('subnets', () => {
   const visualizationStore = useVisualizationStore();
@@ -41,6 +42,7 @@ export const useSubnetsStore = defineStore('subnets', () => {
     if (optimalVLSM.value.total > visualizationStore.totalIps) {
       console.log('not enough main prefix not enough allocated');
       optimalVLSM.value.total = 0;
+      toast.error('Not enough main prefix not enough allocated');
       return;
     }
 
