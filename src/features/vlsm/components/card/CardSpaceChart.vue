@@ -6,7 +6,9 @@ import type { SubnetCalculated } from '../../types';
 import type { Segment } from './types';
 
 const props = defineProps<{
-  data: SubnetCalculated[];
+  data: SubnetCalculated[],
+  class?: string,
+  withBits?: boolean,
 }>();
 
 const data = computed(() => props.data);
@@ -45,8 +47,8 @@ const { BitsList } = storeToRefs(useVisualizationStore());
 <template>
   <Card class="shadow-none outline-none border-0">
     <CardContent>
-      <div class="relative h-16 mb-8 space-y-4">
-        <div class="flex h-full rounded-lg overflow-hidden ">
+      <div :class="props.class ?? 'relative h-16 mb-8 space-y-4'">
+        <div class="flex h-full rounded-lg overflow-hidden">
           <div v-for="(segment, index) in data" :key="index" :style="{
             width: getPercentage(segment.value!) + '%',
             backgroundColor: segment.color,
@@ -61,7 +63,7 @@ const { BitsList } = storeToRefs(useVisualizationStore());
             </div>
           </div>
         </div>
-        <div class="flex gap-4 w-full justify-between items-center">
+        <div v-if="withBits" class="flex gap-4 w-full justify-between items-center">
           <span class="text-sm font-medium" v-for="(item, index) in BitsList" :key="index">.{{ item }}</span>
         </div>
       </div>

@@ -27,7 +27,7 @@ withDefaults(defineProps<CardAllocationProps>(), {
         <CardTitle class="text-muted-foreground font-medium text-lg">
           {{ footerTitle }}
         </CardTitle>
-        <CardDescription class="dark:text-green-500 text-black font-semibold text-4xl">
+        <CardDescription class="text-green-500 font-semibold text-4xl">
           {{ footerDescription }}
         </CardDescription>
       </CardFooter>
