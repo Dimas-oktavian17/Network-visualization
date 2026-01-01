@@ -41,6 +41,7 @@
     "unplugin-vue-markdown": "^29.2.0",
     "vee-validate": "^4.15.1",
     "vue": "^3.5.25",
+    "vue-json-excel3": "^1.0.30",
     "vue-router": "^4.6.3",
     "zod": "^3.25.76"
   },
