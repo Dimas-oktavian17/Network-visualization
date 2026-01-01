@@ -10,7 +10,10 @@ import {
   ItemTitle,
   ItemGroup
 } from '@/components/ui/item';
-import CardSpaceChart from '../card/CardSpaceChart.vue';
+defineProps<{
+  avaible: number;
+  allocated: number;
+}>();
 </script>
 
 <template>
@@ -44,9 +47,11 @@ import CardSpaceChart from '../card/CardSpaceChart.vue';
           <ItemContent>
             <ItemGroup class="flex flex-row justify-between pt-4">
               <ItemDescription>
-                Allocated: IPs
+                Allocated: {{ allocated }} IPs
               </ItemDescription>
-              <ItemActions>12 avaible</ItemActions>
+              <ItemActions>
+                {{ avaible }}
+              </ItemActions>
             </ItemGroup>
             <slot />
           </ItemContent>
