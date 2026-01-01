@@ -34,8 +34,14 @@ export const useSpaceVisualStore = defineStore('space-visual', () => {
 
     return Array.from(new Set(allocatedData?.map(d => JSON.stringify(d))), x => JSON.parse(x));
   });
+  const subnetDetails = computed(() => {
+    const allocatedData = subnetsStore.allocatedData?.filter(d => d.cidr === 30 || d.cidr < 30);
+    return Array.from(new Set(allocatedData?.map(d => JSON.stringify(d))), x => JSON.parse(x));
+
+  });
   return {
     subnetsStore,
-    allocatedIps
+    allocatedIps,
+    subnetDetails
   };
 });

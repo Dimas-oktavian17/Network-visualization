@@ -88,7 +88,7 @@ export const useSubnetsStore = defineStore('subnets', () => {
           // ! UI: allocated Ips SEGMENT
           label: subnet.room,
           value: total,
-          color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+          color: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`,
         };
       });
     allocatedData.value = subnetsCopy;

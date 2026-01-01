@@ -17,12 +17,14 @@ import CardAllocationChart from '../components/card/CardAllocationChart.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardSpaceChart from '../components/card/CardSpaceChart.vue';
 import { useSpaceVisualStore } from '../store/SpaceVisualStore';
+import CardSubnetDetails from '../components/card/CardSubnetDetails.vue';
+
 const visualStore = useVisualizationStore();
 const subnetStore = useSubnetsStore();
 const { totalIps, SubnetsDataComputed, unsupportedClassAlert, SubnetsData } =
   storeToRefs(visualStore);
 const { optimalSubnets, totalAvaibleIps } = storeToRefs(subnetStore);
-const { allocatedIps } = storeToRefs(useSpaceVisualStore());
+const { allocatedIps, subnetDetails } = storeToRefs(useSpaceVisualStore());
 // Subnets calculation on mount
 const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
 </script>
@@ -57,7 +59,7 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
           </TransitionGroup>
           <FormsCalculate @calculate="calculateSubnets" />
           <!-- Allocation -->
-          <Card class="w-full max-w-full border-0">
+          <Card class="w-full max-w-full outline-none shadow-none border-none bg-inherit">
             <CardHeader>
               <Item class="flex justify-between items-center">
                 <ItemContent>
@@ -85,7 +87,26 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
               </Item>
             </CardHeader>
             <div class="grid gap-4">
-              <CardSpaceChart :data="allocatedIps" />
+              <CardSpaceChart :data="allocatedIps" :with-bits="true" />
+            </div>
+          </Card>
+          <!-- Subnets Details -->
+          <!-- Subnets Details -->
+          <Card v-if="allocatedIps.length > 0"
+            class="w-full max-w-full outline-none shadow-none border-none bg-inherit">
+            <CardHeader>
+              <Item class="flex justify-between items-center">
+                <ItemContent>
+                  <ItemTitle>Subnets Details</ItemTitle>
+                </ItemContent>
+              </Item>
+            </CardHeader>
+            <div class="grid gap-4">
+              <CardSubnetDetails v-for="(subnet, index) in subnetDetails" :key="index" :data="[subnet]">
+                <template #footer>
+                  <CardSpaceChart :card-allocate="true" :class="'relative h-5 mb-8 space-y-4'" :data="[subnet]" />
+                </template>
+              </CardSubnetDetails>
             </div>
           </Card>
         </div>
