@@ -98,6 +98,7 @@ export const useSubnetsStore = defineStore('subnets', () => {
   // ! Logic: Optimization detection
   const optimalSubnets = computed(() => {
     const efficient = (optimalVLSM.value.total / visualizationStore.totalIps) * 100;
+    if (efficient > 100) return 'Invalid the cidr is not enough';
     if (efficient >= 75) return '⭐⭐⭐⭐⭐ Excellent (75-100%)';
     if (efficient >= 50) return '⭐⭐⭐⭐ Good (50-75%)';
     if (efficient >= 25) return '⭐⭐⭐ Fair (25-50%)';

@@ -37,7 +37,7 @@ const calculateSubnets = () => subnetStore.SubnetsCalculated(SubnetsData.value);
         <div class="w-full max-w-full space-y-4">
           <!-- Visualization header -->
           <HeaderVisualizer>
-            <HeaderToggle></HeaderToggle>
+            <HeaderToggle :json_data="subnetDetails" />
           </HeaderVisualizer>
           <!-- Alert -->
           <Transition>
